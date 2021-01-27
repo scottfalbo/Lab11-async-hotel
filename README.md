@@ -2,34 +2,46 @@
 
 **Author**: Scott Falbo
 
-**Version**: 1.0.0 
+**Version**: 1.0.1 
 
 
 ## Overview
-A relational database for use in a hotel chain.
+An API for an international hotel chain.  The API should be able to return information about specific hotels, rooms, and amenities.  The API uses a relational data base to organize and store the data.
 
 ## Getting Started
-nothing to start yet
++ `git clone https://github.com/scottfalbo/Lab11-async-hotel.git`
++ Run the App from Visual Studio or another compiler.
+  + Beyold the blankest of screens.
++ `/api` has three endpoints
+  + `/hotels` - returns data about the locations
+  + `/rooms`  - returns data about the rooms
+  + `/amenities` - returns data about the amenities
+
 
 ## Example
-![Async ERD](./assets/async_ERD.png)<br>
+![Async ERD](./assets/AsyncInnERD.png)<br>
 
-## Architecture
-+ Location - LocationRoom 1:many   -    number of rooms can have many options.
-+ LocationRoom - Room  1:1   one room number to one price
-+ Room - RoomLayout  many:many  because many room numbers have many layouts
-+ RoomLayout - Layout  many:many, same as above, its through a join table.
+## Architecture (Relationships)
++ `Hotel` - 1 : many - `HotelRoom` (join table)
++ `HotelRoom` - many : 1 - `Room`
++ `Room` - 1 : many - `RoomAmenities` (join table)
++ `RoomAmenities` - many : 1 - `Amenities`
 
-+ Location
-  + Using a joint entity table to with foreign keys to Locations and Room, getting the RoomLayout data and price.
-+ Room
-  + Table that holds room number and gets the rest of its data, based on the room number, from Layout through the join table.
-  + Has a nickname enum that holds all of the options.
-+ LocationRoom
-  + Joint Entity Table with a payload.  Connects Location to Rooms, and has the logic for price.
-+ RoomLayout
-  + Pure join table connecting Room and Layout
-+ Layout (by nickname)
 
 ## Change Log
-+ *01/25/2021 - 5:45pm* - Finished the worlds worst ERD and half way understand what is happeing.
++ **version 1.0.0** *01/25/2021* - Finished the worlds worst ERD and half way understand what is happeing.
++ **version 1.0.1** - *01/26/2021* - 
+  + Changed ERD image to the Code Fellows provided one.  
+  + Created and configured a new `.NET Core Web Application`
+  + Installed:
+    + `Microsoft.EntityFrameworkCore.SqlServer`
+    + `Microsoft.EntityFrameworkCore.Tools`
+    + `Microsoft.EntityFrameworkCore.Sqlite`
+    + `Microsoft.VisualStudio.Web.CodeGeneration.Design`
+  + Added the classes for the `Hotel`, `Room`, and `Amenities` entities, each other their corresponding properties.
+  + Migrated the entities to a database, and seeded each of the three tables with three entires of dummy data.
+  + Created `API Controllers`for `Hotel`, `Room`, and `Amenities`
+
+## Attributions
+
++ [Code Fellows Entity Framework Setup](https://codefellows.github.io/seattle-dotnet-401d12/class-12/resources/ef-web-app)<br>
