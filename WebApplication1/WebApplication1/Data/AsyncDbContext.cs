@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace AsyncHotel.Data
 {
-    public class HotelsDbContext : DbContext
+    public class AsyncDbContext : DbContext
     {
         public DbSet<Hotel> Hotels { get; set; }
         public DbSet<Room> Rooms { get; set; }
         public DbSet<Amenities> Amenities { get; set; }
 
-        public HotelsDbContext(DbContextOptions options) : base(options)
+        public AsyncDbContext(DbContextOptions options) : base(options)
         {
 
         }

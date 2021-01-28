@@ -1,4 +1,6 @@
 using AsyncHotel.Data;
+using AsyncHotel.Models.Interfaces;
+using AsyncHotel.Models.Interfaces.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -29,11 +31,15 @@ namespace WebApplication1
             services.AddMvc();
             services.AddControllers();
 
-            services.AddDbContext<HotelsDbContext>(options => {
+            services.AddDbContext<AsyncDbContext>(options => {
                 // Our DATABASE_URL from js days
                 string connectionString = Configuration.GetConnectionString("DefaultConnection");
                 options.UseSqlServer(connectionString);
             });
+
+            services.AddTransient<IRoom, RoomRepository>();
+            services.AddTransient<IHotel, HotelRepository>();
+            services.AddTransient<IAmenities, AmenitiesRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
