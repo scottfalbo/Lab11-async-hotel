@@ -21,11 +21,14 @@ An API for an international hotel chain.  The API should be able to return infor
 ## Example
 ![Async ERD](./assets/AsyncInnERD.png)<br>
 
-## Architecture (Relationships)
+## Relationships
 + `Hotel` - 1 : many - `HotelRoom` (join table)
 + `HotelRoom` - many : 1 - `Room`
 + `Room` - 1 : many - `RoomAmenities` (join table)
 + `RoomAmenities` - many : 1 - `Amenities`
+
+## Architecture 
+
 
 
 ## Change Log
@@ -41,6 +44,10 @@ An API for an international hotel chain.  The API should be able to return infor
   + Added the classes for the `Hotel`, `Room`, and `Amenities` entities, each other their corresponding properties.
   + Migrated the entities to a database, and seeded each of the three tables with three entires of dummy data.
   + Created `API Controllers`for `Hotel`, `Room`, and `Amenities`
+  + **version 1.0.2** *01/27/2021* -
+    + Refactored for dependency injection.  Built interfaces for `IHotel`, `IRoom`, and `IAmenity`
+    + Built `Repositories` for the above classes to handle their interactions with the database and app.
+    + Added `Controllers` for the classes to handle routing.
 
 ## Attributions
 
