@@ -31,6 +31,8 @@ namespace WebApplication1
             services.AddMvc();
             services.AddControllers();
 
+            //bring in newtonsoft
+
             services.AddDbContext<AsyncDbContext>(options => {
                 // Our DATABASE_URL from js days
                 string connectionString = Configuration.GetConnectionString("DefaultConnection");
