@@ -18,17 +18,7 @@ namespace AsyncHotel.Models.Interfaces.Services
 
         public async Task<HotelRoom> Create(HotelRoom hotelRoom, int hotelId)
         {
-         
-            HotelRoom hotelRoomEntry = new HotelRoom()
-            {
-                HotelId = hotelId,
-                RoomNumber = hotelRoom.RoomNumber,
-                RoomId = hotelRoom.RoomId,
-                Rate = hotelRoom.Rate,
-                PetFriendly = hotelRoom.PetFriendly
-            };
-
-            _context.Entry(hotelRoomEntry).State = EntityState.Added;
+            _context.Entry(hotelRoom).State = EntityState.Added;
             await _context.SaveChangesAsync();
 
             return hotelRoom;
@@ -52,13 +42,15 @@ namespace AsyncHotel.Models.Interfaces.Services
             return hotelRooms;
         }
 
-        public Task<HotelRoom> UpdateHotelRoom(int hotelId, int roomId)
+        public Task<HotelRoom> UpdateHotelRoom(HotelRoom hotelRoom)
         {
             throw new NotImplementedException();
         }
+
         public Task DeleteHotelRoom(int hotelId, int roomId)
         {
             throw new NotImplementedException();
         }
+
     }
 }

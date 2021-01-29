@@ -25,10 +25,10 @@ namespace AsyncHotel.Data
             // base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<HotelRoom>().HasKey(
-                hotelRoom => new { hotelRoom.HotelId, hotelRoom.RoomId });
+                x => new { x.HotelId, x.RoomId });
 
             modelBuilder.Entity<RoomAmenities>().HasKey(
-                roomAmenities => new { roomAmenities.RoomId, roomAmenities.AmenitiesId});
+                x => new { x.RoomId, x.AmenitiesId });
 
             modelBuilder.Entity<Hotel>().HasData(
               new Hotel 
@@ -101,6 +101,8 @@ namespace AsyncHotel.Data
                     AmenityName = "Mini bar"
                 }
                 );
+        
+
 
         }
 

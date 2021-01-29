@@ -3,14 +3,16 @@ using AsyncHotel.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AsyncHotel.Migrations
 {
     [DbContext(typeof(AsyncDbContext))]
-    partial class HotelsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210129045102_added-join-tables-maybe")]
+    partial class addedjointablesmaybe
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -215,7 +217,7 @@ namespace AsyncHotel.Migrations
             modelBuilder.Entity("AsyncHotel.Models.RoomAmenities", b =>
                 {
                     b.HasOne("AsyncHotel.Models.Amenities", "Amenities")
-                        .WithMany("RoomAmenities")
+                        .WithMany()
                         .HasForeignKey("AmenitiesId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
