@@ -13,6 +13,7 @@ namespace AsyncHotel.Data
         public DbSet<Room> Rooms { get; set; }
         public DbSet<Amenities> Amenities { get; set; }
         public DbSet<HotelRoom> HotelRooms { get; set; }
+        public DbSet<RoomAmenities> RoomAmenities { get; set; }
 
         public AsyncDbContext(DbContextOptions options) : base(options)
         {

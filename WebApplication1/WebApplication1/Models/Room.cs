@@ -18,7 +18,6 @@ namespace AsyncHotel.Models
         public List<HotelRoom> HotelRooms { get; set; }
         public List <RoomAmenities> RoomAmenities { get; set; }
 
-
     }
 
     public enum Layouts

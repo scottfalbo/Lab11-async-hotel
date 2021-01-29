@@ -28,22 +28,22 @@ namespace AsyncHotel.Models.Interfaces.Services
             return hotelRoom;
         }
 
-        public async Task<List<Hotel>> GetHotels()
+        public async Task<List<HotelRoom>> GetHotelRooms()
         {
-            var hotels = await _context.Hotels.ToListAsync();
-            return hotels;
+            var hotelRooms = await _context.HotelRooms.ToListAsync();
+            return hotelRooms;
         }
 
-        public async Task<Hotel> UpdateHotel(int id, Hotel hotel)
+        public async Task<HotelRoom> UpdateHotelRoom(int id, HotelRoom hotelRoom)
         {
-            _context.Entry(hotel).State = EntityState.Modified;
+            _context.Entry(hotelRoom).State = EntityState.Modified;
             await _context.SaveChangesAsync();
-            return hotel;
+            return hotelRoom;
         }
-        public async Task DeleteHotel(int id)
+        public async Task DeleteHotelRoom(int id)
         {
-            Hotel hotel = await GetHotel(id);
-            _context.Entry(hotel).State = EntityState.Deleted;
+            HotelRoom hotelRoom = await GetHotelRoom(id);
+            _context.Entry(hotelRoom).State = EntityState.Deleted;
             await _context.SaveChangesAsync();
         }
     }
