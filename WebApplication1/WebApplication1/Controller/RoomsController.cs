@@ -68,9 +68,10 @@ namespace AsyncHotel.Controller
             return CreatedAtAction("GetRoom", new { id = room.Id }, room);
         }
 
+        // POST: api/rooms/{roomId}/Amenities/{amenitiesId}
         [HttpPost]
         [Route("{roomId}/Amenities/{amenitiesId}")]
-        public async Task<ActionResult> PostAmenityToRoom(int roomId, int AmenitiesId)
+        public async Task<ActionResult> AddAmenityToRoom(int roomId, int AmenitiesId)
         {
             await _room.AddAmenityToRoom(roomId, AmenitiesId);
             return Ok();
@@ -82,6 +83,14 @@ namespace AsyncHotel.Controller
         {
             await _room.DeleteRoom(id);
             return NoContent();
+        }
+
+        [HttpDelete]
+        [Route("{roomId}/Amenities/{AmentiesId}")]
+        public async Task<ActionResult> RemoveAmenityFromRoom(int roomId, int amenitiesId)
+        {
+            await _room.RemoveAmenityFromRoom(roomId, amenitiesId);
+            return Ok();
         }
 
     }

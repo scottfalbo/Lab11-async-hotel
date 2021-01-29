@@ -29,23 +29,36 @@ namespace AsyncHotel.Models.Interfaces.Services
         }
 
         /// <summary>
-        /// Gets a Room by ID from the DB
+        /// Gets a Room and amenities by RoomID from the DB
         /// </summary>
         /// <param name="id"> int RoomId </param>
         /// <returns> Room object from DB </returns>
         public async Task<Room> GetRoom(int id)
         {
             Room room = await _context.Rooms.FindAsync(id);
+            var roomAmenities = await _context.RoomAmenities.Where(x => x.RoomId == id)
+                                                            .Include(x => x.Amenities)
+                                                            .ToListAsync();
+            room.RoomAmenities = roomAmenities;
             return room;
         }
 
         /// <summary>
-        /// Gets a List of all of the rooms from the DB
+        /// Gets a List of all of the rooms and amenities from the DB
         /// </summary>
         /// <returns> a List of all of the rooms </returns>
         public async Task<List<Room>> GetRooms()
         {
             var rooms = await _context.Rooms.ToListAsync();
+
+            foreach(var room in rooms)
+            {
+                var roomAmenities = await _context.RoomAmenities.Where(x => x.RoomId == room.Id)
+                                                                .Include(x => x.Amenities)
+                                                                .ToListAsync();
+                room.RoomAmenities = roomAmenities;
+            }    
+
             return rooms;
         }
 
