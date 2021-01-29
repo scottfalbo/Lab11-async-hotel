@@ -74,7 +74,7 @@ namespace AsyncHotel.Controller
         public async Task<ActionResult> AddAmenityToRoom(int roomId, int AmenitiesId)
         {
             await _room.AddAmenityToRoom(roomId, AmenitiesId);
-            return Ok();
+            return NoContent();
         }
 
         // DELETE: api/Rooms/5
@@ -90,7 +90,7 @@ namespace AsyncHotel.Controller
         public async Task<ActionResult> RemoveAmenityFromRoom(int roomId, int amenitiesId)
         {
             await _room.RemoveAmenityFromRoom(roomId, amenitiesId);
-            return Ok();
+            return NoContent();
         }
 
     }

@@ -5,12 +5,12 @@ using System.Threading.Tasks;
 
 namespace AsyncHotel.Models.Interfaces
 {
-    interface IHotelRoom
+    public interface IHotelRoom
     {
-        Task<HotelRoom> Create(HotelRoom hotelRoom);
-        Task<HotelRoom> GetHotelRoom(int id);
-        Task<List<HotelRoom>> GetHotelRooms();
-        Task<HotelRoom> UpdateHotelRoom(int id, HotelRoom hoteRoom);
-        Task DeleteHotelRoom(int id);
+        Task<HotelRoom> Create(HotelRoom hotelRoom, int hotelId);
+        Task<HotelRoom> GetHotelRoom(int hotelId, int roomId);
+        Task<List<HotelRoom>> GetHotelRooms(int hotelId);
+        Task<HotelRoom> UpdateHotelRoom(HotelRoom hotelRoom);
+        Task DeleteHotelRoom(int hotelId, int roomId);
     }
 }
