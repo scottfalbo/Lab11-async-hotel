@@ -3,14 +3,16 @@ using AsyncHotel.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AsyncHotel.Migrations
 {
     [DbContext(typeof(AsyncDbContext))]
-    partial class HotelsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210129212302_joined-tables")]
+    partial class joinedtables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -141,32 +143,6 @@ namespace AsyncHotel.Migrations
                     b.HasIndex("RoomId");
 
                     b.ToTable("HotelRooms");
-
-                    b.HasData(
-                        new
-                        {
-                            HotelId = 1,
-                            RoomId = 1,
-                            PetFriendly = false,
-                            Rate = 0m,
-                            RoomNumber = 0
-                        },
-                        new
-                        {
-                            HotelId = 2,
-                            RoomId = 2,
-                            PetFriendly = false,
-                            Rate = 0m,
-                            RoomNumber = 0
-                        },
-                        new
-                        {
-                            HotelId = 3,
-                            RoomId = 3,
-                            PetFriendly = false,
-                            Rate = 0m,
-                            RoomNumber = 0
-                        });
                 });
 
             modelBuilder.Entity("AsyncHotel.Models.Room", b =>
@@ -221,23 +197,6 @@ namespace AsyncHotel.Migrations
                     b.HasIndex("AmenitiesId");
 
                     b.ToTable("RoomAmenities");
-
-                    b.HasData(
-                        new
-                        {
-                            RoomId = 1,
-                            AmenitiesId = 1
-                        },
-                        new
-                        {
-                            RoomId = 2,
-                            AmenitiesId = 2
-                        },
-                        new
-                        {
-                            RoomId = 3,
-                            AmenitiesId = 3
-                        });
                 });
 
             modelBuilder.Entity("AsyncHotel.Models.HotelRoom", b =>

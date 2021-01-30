@@ -35,7 +35,7 @@ namespace AsyncHotel.Controller
 
         // GET: api/HotelRooms
         [HttpGet]
-        [Route("{hotelId}/Rooms")]
+        [Route("{hotelId}")]
         //[Route]
         public async Task<ActionResult<IEnumerable<HotelRoom>>> GetHotelRooms(int hotelId)
         {
@@ -44,7 +44,7 @@ namespace AsyncHotel.Controller
 
         // GET: api/HotelRooms/5
         [HttpGet]
-        [Route("{hotelId}/Rooms/{roomId}")]
+        [Route("{hotelId}/{roomId}")]
         public async Task<ActionResult<HotelRoom>> GetHotelRoom(int hotelId, int roomId)
         {
             return await _hotelRoom.GetHotelRoom(hotelId, roomId);
@@ -54,7 +54,7 @@ namespace AsyncHotel.Controller
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut]
-        [Route("{hotelId}/Rooms/{roomId}")]
+        [Route("{hotelId}/{roomId}")]
         public async Task<IActionResult> PutHotelRoom(HotelRoom hotelRoom, int hotelId, int roomId)
         {
             if (hotelId != hotelRoom.HotelId || roomId != hotelRoom.RoomId)
@@ -69,7 +69,7 @@ namespace AsyncHotel.Controller
 
         // DELETE: api/HotelRooms/5
         [HttpDelete]
-        [Route("{hotelId}/Rooms/{roomId}")]
+        [Route("{hotelId}/{roomId}")]
         public async Task<ActionResult<HotelRoom>> DeleteHotelRoom(int hotelId, int roomId)
         {
             await _hotelRoom.DeleteHotelRoom(hotelId, roomId);

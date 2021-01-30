@@ -35,11 +35,12 @@ namespace AsyncHotel.Models.Interfaces.Services
         /// <returns> Room object from DB </returns>
         public async Task<Room> GetRoom(int id)
         {
-            Room room = await _context.Rooms.FindAsync(id);
-            var roomAmenities = await _context.RoomAmenities.Where(x => x.RoomId == id)
-                                                            .Include(x => x.Amenities)
-                                                            .ToListAsync();
-            room.RoomAmenities = roomAmenities;
+            Room room = await _context.Rooms.Where(x => x.Id == id)
+                                            .Include(x => x.RoomAmenities)
+                                            .ThenInclude(x => x.Amenities)
+                                            .Include(x => x.HotelRooms)
+                                            .ThenInclude(x => x.Hotel)
+                                            .FirstOrDefaultAsync();
             return room;
         }
 
@@ -49,16 +50,11 @@ namespace AsyncHotel.Models.Interfaces.Services
         /// <returns> a List of all of the rooms </returns>
         public async Task<List<Room>> GetRooms()
         {
-            var rooms = await _context.Rooms.ToListAsync();
-
-            foreach(var room in rooms)
-            {
-                var roomAmenities = await _context.RoomAmenities.Where(x => x.RoomId == room.Id)
-                                                                .Include(x => x.Amenities)
-                                                                .ToListAsync();
-                room.RoomAmenities = roomAmenities;
-            }    
-
+            var rooms = await _context.Rooms.Include(x => x.RoomAmenities)
+                                                    .ThenInclude(x => x.Amenities)
+                                                    .Include(x => x.HotelRooms)
+                                                    .ThenInclude(x => x.Hotel)
+                                                    .ToListAsync();
             return rooms;
         }
 

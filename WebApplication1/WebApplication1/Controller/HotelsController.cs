@@ -26,6 +26,7 @@ namespace AsyncHotel.Controller
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Hotel>>> GetHotels()
         {
+
             return Ok(await _hotel.GetHotels());
         }
 
