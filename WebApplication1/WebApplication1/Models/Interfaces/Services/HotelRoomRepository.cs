@@ -30,6 +30,8 @@ namespace AsyncHotel.Models.Interfaces.Services
             HotelRoom hotelRoom = await _context.HotelRooms.Where(x => x.HotelId == hotelId && x.RoomId == roomId)
                                                            .Include(x => x.Hotel)
                                                            .Include(x => x.Room)
+                                                           .ThenInclude(x => x.RoomAmenities)
+                                                           .ThenInclude(x => x.Amenities)
                                                            .FirstOrDefaultAsync();
             return hotelRoom;
         }
@@ -38,18 +40,24 @@ namespace AsyncHotel.Models.Interfaces.Services
         {
             List<HotelRoom> hotelRooms = await _context.HotelRooms.Where(x => x.HotelId == hotelId)
                                                                   .Include(x => x.Room)
+                                                                  .ThenInclude(x => x.RoomAmenities)
+                                                                  .ThenInclude(x => x.Amenities)
                                                                   .ToListAsync();
             return hotelRooms;
         }
 
-        public Task<HotelRoom> UpdateHotelRoom(HotelRoom hotelRoom)
+        public async Task<HotelRoom> UpdateHotelRoom(HotelRoom hotelRoom)
         {
-            throw new NotImplementedException();
+            _context.Entry(hotelRoom).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+            return hotelRoom;
         }
 
-        public Task DeleteHotelRoom(int hotelId, int roomId)
+        public async Task DeleteHotelRoom(int hotelId, int roomId)
         {
-            throw new NotImplementedException();
+            HotelRoom hotelRoom = await GetHotelRoom(hotelId, roomId);
+            _context.Entry(hotelRoom).State = EntityState.Deleted;
+            await _context.SaveChangesAsync();
         }
 
     }
