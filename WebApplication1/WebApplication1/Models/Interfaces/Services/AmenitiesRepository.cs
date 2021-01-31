@@ -25,13 +25,22 @@ namespace AsyncHotel.Models.Interfaces.Services
 
         public async Task<Amenities> GetAmenity(int id)
         {
-            Amenities amenity = await _context.Amenities.FindAsync(id);
+            Amenities amenity = await _context.Amenities.Where(x => x.Id == id)
+                                                        .Include(x => x.RoomAmenities)
+                                                        .ThenInclude(x => x.Room)
+                                                        .ThenInclude(x => x.HotelRooms)
+                                                        .ThenInclude(x => x.Hotel)
+                                                        .FirstOrDefaultAsync();
             return amenity;
         }
 
         public async Task<List<Amenities>> GetAmenities()
         {
-            var amenities = await _context.Amenities.ToListAsync();
+            var amenities = await _context.Amenities.Include(x => x.RoomAmenities)
+                                                    .ThenInclude(x => x.Room)
+                                                    .ThenInclude(x => x.HotelRooms)
+                                                    .ThenInclude(x => x.Hotel)
+                                                    .ToListAsync();
             return amenities;
         }
 

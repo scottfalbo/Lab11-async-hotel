@@ -25,13 +25,25 @@ namespace AsyncHotel.Models.Interfaces.Services
 
         public async Task<Hotel> GetHotel(int id)
         {
+            //  Hotel hotel = await _context.Hotels.FindAsync(id);
+            //return hotel;
             Hotel hotel = await _context.Hotels.FindAsync(id);
+            var hotelRooms = await _context.HotelRooms.Where(x => x.HotelId == id)
+                                                      .Include(x => x.Room)
+                                                      .ThenInclude(x => x.RoomAmenities)
+                                                      .ThenInclude(x => x.Amenities)
+                                                      .ToListAsync();
+            hotel.HotelRooms = hotelRooms;
             return hotel;
         }
 
         public async Task<List<Hotel>> GetHotels()
         {
-            var hotels = await _context.Hotels.ToListAsync();
+            var hotels = await _context.Hotels.Include(x => x.HotelRooms)
+                                                    .ThenInclude(x => x.Room)
+                                                    .ThenInclude(x => x.RoomAmenities)
+                                                    .ThenInclude(x => x.Amenities)
+                                                    .ToListAsync();
             return hotels;
         }
 

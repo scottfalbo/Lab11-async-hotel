@@ -70,7 +70,7 @@ namespace AsyncHotel.Controller
 
         // POST: api/rooms/{roomId}/Amenities/{amenitiesId}
         [HttpPost]
-        [Route("{roomId}/Amenities/{amenitiesId}")]
+        [Route("{roomId}/{amenitiesId}")]
         public async Task<ActionResult> AddAmenityToRoom(int roomId, int AmenitiesId)
         {
             await _room.AddAmenityToRoom(roomId, AmenitiesId);
@@ -86,7 +86,7 @@ namespace AsyncHotel.Controller
         }
 
         [HttpDelete]
-        [Route("{roomId}/Amenities/{AmentiesId}")]
+        [Route("{roomId}/{AmentiesId}")]
         public async Task<ActionResult> RemoveAmenityFromRoom(int roomId, int amenitiesId)
         {
             await _room.RemoveAmenityFromRoom(roomId, amenitiesId);
