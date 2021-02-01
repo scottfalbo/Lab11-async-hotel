@@ -4,6 +4,14 @@
 
 **Version**: 1.0.1 
 
++ [Overview](#overview)
++ [Getting Started](#getting-started)
++ [Example](#example)
++ [Relationships](#relationships)
++ [Routing](#routing)
++ [Change Log](#change-log)
++ [Attributions](#attributions)
+
 
 ## Overview
 An API for an international hotel chain.  The API should be able to return information about specific hotels, rooms, and amenities.  The API uses a relational data base to organize and store the data.
@@ -27,7 +35,8 @@ An API for an international hotel chain.  The API should be able to return infor
 + `Room` - 1 : many - `RoomAmenities` (join table)
 + `RoomAmenities` - many : 1 - `Amenities`
 
-## Architecture 
+## Routing
++ Will add routes and returns here. 
 
 
 
@@ -48,6 +57,10 @@ An API for an international hotel chain.  The API should be able to return infor
     + Refactored for dependency injection.  Built interfaces for `IHotel`, `IRoom`, and `IAmenity`
     + Built `Repositories` for the above classes to handle their interactions with the database and app.
     + Added `Controllers` for the classes to handle routing.
+  + **version 1.0.3** *01/28/2021 - 
+    + Added an `IHotelRoom` interface, `HotelRoom` model, `RoomAmenities` model.
+    + Updated services to `Include` all linked data when a query is made against any object.
+    + Updated summary comments in service files. 
 
 ## Attributions
 

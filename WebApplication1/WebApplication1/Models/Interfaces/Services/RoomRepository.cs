@@ -63,7 +63,7 @@ namespace AsyncHotel.Models.Interfaces.Services
         /// </summary>
         /// <param name="id"> int roomId </param>
         /// <param name="room"> Room object </param>
-        /// <returns></returns>
+        /// <returns> updated Room object </returns>
         public async Task<Room> UpdateRoom(int id, Room room)
         {
             _context.Entry(room).State = EntityState.Modified;
@@ -76,7 +76,7 @@ namespace AsyncHotel.Models.Interfaces.Services
         /// </summary>
         /// <param name="roomId"> int roomID </param>
         /// <param name="amenitiesId"> int amenitiesId </param>
-        /// <returns></returns>
+        /// <returns> no return </returns>
         public async Task AddAmenityToRoom(int roomId, int amenitiesId)
         {
             RoomAmenities roomAmenity = new RoomAmenities()
@@ -91,8 +91,8 @@ namespace AsyncHotel.Models.Interfaces.Services
         /// <summary>
         /// Delete a Room object from the DB by ID
         /// </summary>
-        /// <param name="id"> Room object </param>
-        /// <returns> nothing </returns>
+        /// <param name="id"> int roomId </param>
+        /// <returns> no return </returns>
         public async Task DeleteRoom(int id)
         {
             Room room = await GetRoom(id);
@@ -105,7 +105,7 @@ namespace AsyncHotel.Models.Interfaces.Services
         /// </summary>
         /// <param name="roomId"> int roomId </param>
         /// <param name="amenitiesId"> int amenitiesId </param>
-        /// <returns></returns>
+        /// <returns> no return </returns>
         public async Task RemoveAmenityFromRoom(int roomId, int amenitiesId)
         {
             var result = await _context.RoomAmenities.FirstOrDefaultAsync(

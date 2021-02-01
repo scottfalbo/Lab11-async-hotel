@@ -16,6 +16,11 @@ namespace AsyncHotel.Models.Interfaces.Services
             _context = context;
         }
 
+        /// <summary>
+        /// Create a new ammenity in the DB
+        /// </summary>
+        /// <param name="amenities"> Amenties object </param>
+        /// <returns> the new amenity object </returns>
         public async Task<Amenities> Create(Amenities amenities)
         {
             _context.Entry(amenities).State = EntityState.Added;
@@ -23,6 +28,11 @@ namespace AsyncHotel.Models.Interfaces.Services
             return amenities;
         }
 
+        /// <summary>
+        /// Get a single Amenity by ID
+        /// </summary>
+        /// <param name="id"> int Amenity ID </param>
+        /// <returns> Amenities object </returns>
         public async Task<Amenities> GetAmenity(int id)
         {
             Amenities amenity = await _context.Amenities.Where(x => x.Id == id)
@@ -34,6 +44,10 @@ namespace AsyncHotel.Models.Interfaces.Services
             return amenity;
         }
 
+        /// <summary>
+        /// Get a list of all stored Amenties
+        /// </summary>
+        /// <returns> List<Amenities> object </returns>
         public async Task<List<Amenities>> GetAmenities()
         {
             var amenities = await _context.Amenities.Include(x => x.RoomAmenities)
@@ -44,12 +58,24 @@ namespace AsyncHotel.Models.Interfaces.Services
             return amenities;
         }
 
+        /// <summary>
+        /// Edit and update an Amenties data
+        /// </summary>
+        /// <param name="id"> int Amenties ID </param>
+        /// <param name="amenities"> Amenties object </param>
+        /// <returns> updated Amenties object </returns>
         public async Task<Amenities> UpdateAmenities(int id, Amenities amenities)
         {
             _context.Entry(amenities).State = EntityState.Modified;
             await _context.SaveChangesAsync();
             return amenities;
         }
+
+        /// <summary>
+        /// Delete and Amenties object from the database
+        /// </summary>
+        /// <param name="id"> int amentiesId </param>
+        /// <returns> no return </returns>
         public async Task DeleteAmenity(int id)
         {
             Amenities amenities = await GetAmenity(id);

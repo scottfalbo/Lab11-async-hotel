@@ -16,6 +16,12 @@ namespace AsyncHotel.Models.Interfaces.Services
             _context = context;
         }
 
+        /// <summary>
+        /// Create a new HotelRoom object
+        /// </summary>
+        /// <param name="hotelRoom"> HotelRoom object </param>
+        /// <param name="hotelId"> int hotelId </param>
+        /// <returns> new HotelRoom object </returns>
         public async Task<HotelRoom> Create(HotelRoom hotelRoom, int hotelId)
         {
             _context.Entry(hotelRoom).State = EntityState.Added;
@@ -24,7 +30,12 @@ namespace AsyncHotel.Models.Interfaces.Services
             return hotelRoom;
         }
 
-
+        /// <summary>
+        /// Get HotelRoom by composite ID of Hotel and Room objects.
+        /// </summary>
+        /// <param name="hotelId"> int hotelId </param>
+        /// <param name="roomId"> int roomId </param>
+        /// <returns> HotelRoom object </returns>
         public async Task<HotelRoom> GetHotelRoom(int hotelId, int roomId)
         {
             HotelRoom hotelRoom = await _context.HotelRooms.Where(x => x.HotelId == hotelId && x.RoomId == roomId)
@@ -36,6 +47,11 @@ namespace AsyncHotel.Models.Interfaces.Services
             return hotelRoom;
         }
 
+        /// <summary>
+        /// Gets a list of all HotelRoom objects for a Hotel in the DB
+        /// </summary>
+        /// <param name="hotelId"> int hotelId </param>
+        /// <returns> HotelRoom objects for specifed Hotel object </returns>
         public async Task<List<HotelRoom>> GetHotelRooms(int hotelId)
         {
             List<HotelRoom> hotelRooms = await _context.HotelRooms.Where(x => x.HotelId == hotelId)
@@ -46,6 +62,11 @@ namespace AsyncHotel.Models.Interfaces.Services
             return hotelRooms;
         }
 
+        /// <summary>
+        /// Update a HotelRoom objects data in the DB
+        /// </summary>
+        /// <param name="hotelRoom"> HotelRoom object </param>
+        /// <returns> updated HotelRoom object </returns>
         public async Task<HotelRoom> UpdateHotelRoom(HotelRoom hotelRoom)
         {
             _context.Entry(hotelRoom).State = EntityState.Modified;
@@ -53,6 +74,12 @@ namespace AsyncHotel.Models.Interfaces.Services
             return hotelRoom;
         }
 
+        /// <summary>
+        /// Delete a HotelRoom object from the DB
+        /// </summary>
+        /// <param name="hotelId"> int hotelId </param>
+        /// <param name="roomId"> int RoomId </param>
+        /// <returns> no return </returns>
         public async Task DeleteHotelRoom(int hotelId, int roomId)
         {
             HotelRoom hotelRoom = await GetHotelRoom(hotelId, roomId);

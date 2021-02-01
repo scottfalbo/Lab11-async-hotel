@@ -31,10 +31,13 @@ namespace WebApplication1
             services.AddMvc();
             services.AddControllers();
 
-            //bring in newtonsoft
+            // Newtonsoft to prevent infinite reference looping
+            services.AddControllers().AddNewtonsoftJson(options =>
+                options.SerializerSettings.ReferenceLoopHandling =
+                Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
+            // Set up a context to our database for us in the App.
             services.AddDbContext<AsyncDbContext>(options => {
-                // Our DATABASE_URL from js days
                 string connectionString = Configuration.GetConnectionString("DefaultConnection");
                 options.UseSqlServer(connectionString);
             });
@@ -43,10 +46,6 @@ namespace WebApplication1
             services.AddTransient<IHotel, HotelRepository>();
             services.AddTransient<IAmenities, AmenitiesRepository>();
             services.AddTransient<IHotelRoom, HotelRoomRepository>();
-
-            services.AddControllers().AddNewtonsoftJson(options =>
-                options.SerializerSettings.ReferenceLoopHandling = 
-                Newtonsoft.Json.ReferenceLoopHandling.Ignore);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
