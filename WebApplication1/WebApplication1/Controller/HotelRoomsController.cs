@@ -22,7 +22,7 @@ namespace AsyncHotel.Controller
             _hotelRoom = hotelRoom;
         }
 
-        // POST: api/HotelRooms
+        // POST: api/HotelRooms/
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
@@ -33,7 +33,7 @@ namespace AsyncHotel.Controller
             return CreatedAtAction("GetHotelRoom", new { id = hotelRoom.HotelId }, hotelRoom);
         }
 
-        // GET: api/HotelRooms
+        // GET: api/HotelRooms/n
         [HttpGet]
         [Route("{hotelId}")]
         //[Route]
@@ -42,7 +42,7 @@ namespace AsyncHotel.Controller
             return await _hotelRoom.GetHotelRooms(hotelId);
         }
 
-        // GET: api/HotelRooms/5
+        // GET: api/HotelRooms/n/n
         [HttpGet]
         [Route("{hotelId}/{roomId}")]
         public async Task<ActionResult<HotelRoom>> GetHotelRoom(int hotelId, int roomId)
@@ -50,7 +50,7 @@ namespace AsyncHotel.Controller
             return await _hotelRoom.GetHotelRoom(hotelId, roomId);
         }
 
-        // PUT: api/HotelRooms/5
+        // PUT: api/HotelRooms/n/n
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut]
@@ -65,9 +65,7 @@ namespace AsyncHotel.Controller
             return Ok(updatedHotelRoom);
         }
 
-
-
-        // DELETE: api/HotelRooms/5
+        // DELETE: api/HotelRooms/n/n
         [HttpDelete]
         [Route("{hotelId}/{roomId}")]
         public async Task<ActionResult<HotelRoom>> DeleteHotelRoom(int hotelId, int roomId)
@@ -75,7 +73,5 @@ namespace AsyncHotel.Controller
             await _hotelRoom.DeleteHotelRoom(hotelId, roomId);
             return NoContent();
         }
-
-
     }
 }
