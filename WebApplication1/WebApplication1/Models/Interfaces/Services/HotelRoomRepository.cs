@@ -1,4 +1,5 @@
 ﻿using AsyncHotel.Data;
+using AsyncHotel.Models.Api;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -22,8 +23,15 @@ namespace AsyncHotel.Models.Interfaces.Services
         /// <param name="hotelRoom"> HotelRoom object </param>
         /// <param name="hotelId"> int hotelId </param>
         /// <returns> new HotelRoom object </returns>
-        public async Task<HotelRoom> Create(HotelRoom hotelRoom, int hotelId)
+        public async Task<HotelRoom> Create(HotelRoomDto inboudData, int hotelId)
         {
+            HotelRoom hotelRoom = new HotelRoom()
+            {
+                RoomNumber = inboudData.RoomNumber,
+                Rate = inboudData.Rate,
+                PetFriendly = inboudData.PetFriendly
+            };
+
             _context.Entry(hotelRoom).State = EntityState.Added;
             await _context.SaveChangesAsync();
 
@@ -36,15 +44,16 @@ namespace AsyncHotel.Models.Interfaces.Services
         /// <param name="hotelId"> int hotelId </param>
         /// <param name="roomId"> int roomId </param>
         /// <returns> HotelRoom object </returns>
-        public async Task<HotelRoom> GetHotelRoom(int hotelId, int roomId)
+        public async Task<HotelRoomDto> GetHotelRoom(int hotelId, int roomId)
         {
-            HotelRoom hotelRoom = await _context.HotelRooms.Where(x => x.HotelId == hotelId && x.RoomId == roomId)
-                                                           .Include(x => x.Hotel)
-                                                           .Include(x => x.Room)
-                                                           .ThenInclude(x => x.RoomAmenities)
-                                                           .ThenInclude(x => x.Amenities)
-                                                           .FirstOrDefaultAsync();
-            return hotelRoom;
+            return await _context.HotelRooms
+                .Where(x => x.HotelId == hotelId && x.RoomId == roomId)
+                .Select(hotelRoom => new HotelRoomDto
+                {
+                    RoomNumber = hotelRoom.RoomNumber,
+                    Rate = hotelRoom.Rate,
+                    PetFriendly = hotelRoom.PetFriendly
+                }).FirstOrDefaultAsync();
         }
 
         /// <summary>
@@ -52,14 +61,16 @@ namespace AsyncHotel.Models.Interfaces.Services
         /// </summary>
         /// <param name="hotelId"> int hotelId </param>
         /// <returns> HotelRoom objects for specifed Hotel object </returns>
-        public async Task<List<HotelRoom>> GetHotelRooms(int hotelId)
+        public async Task<List<HotelRoomDto>> GetHotelRooms(int hotelId)
         {
-            List<HotelRoom> hotelRooms = await _context.HotelRooms.Where(x => x.HotelId == hotelId)
-                                                                  .Include(x => x.Room)
-                                                                  .ThenInclude(x => x.RoomAmenities)
-                                                                  .ThenInclude(x => x.Amenities)
-                                                                  .ToListAsync();
-            return hotelRooms;
+            return await _context.HotelRooms
+                .Where(x => x.HotelId == hotelId)
+                .Select(rooms => new HotelRoomDto
+                {
+                    RoomNumber = rooms.RoomNumber,
+                    Rate = rooms.Rate,
+                    PetFriendly = rooms.PetFriendly
+                }).ToListAsync();
         }
 
         /// <summary>
@@ -67,7 +78,7 @@ namespace AsyncHotel.Models.Interfaces.Services
         /// </summary>
         /// <param name="hotelRoom"> HotelRoom object </param>
         /// <returns> updated HotelRoom object </returns>
-        public async Task<HotelRoom> UpdateHotelRoom(HotelRoom hotelRoom)
+        public async Task<HotelRoomDto> UpdateHotelRoom(HotelRoomDto hotelRoom)
         {
             _context.Entry(hotelRoom).State = EntityState.Modified;
             await _context.SaveChangesAsync();
@@ -82,7 +93,7 @@ namespace AsyncHotel.Models.Interfaces.Services
         /// <returns> no return </returns>
         public async Task DeleteHotelRoom(int hotelId, int roomId)
         {
-            HotelRoom hotelRoom = await GetHotelRoom(hotelId, roomId);
+            HotelRoomDto hotelRoom = await GetHotelRoom(hotelId, roomId);
             _context.Entry(hotelRoom).State = EntityState.Deleted;
             await _context.SaveChangesAsync();
         }

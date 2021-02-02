@@ -34,7 +34,7 @@ namespace AsyncHotel.Controller
         [HttpGet("{id}")]
         public async Task<ActionResult<RoomDto>> GetRoom(int id)
         {
-            var room = await _room.GetRoom(id);
+            RoomDto room = await _room.GetRoom(id);
 
             if (room == null)
             {
@@ -63,7 +63,7 @@ namespace AsyncHotel.Controller
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<Room>> PostRoom(Room room)
+        public async Task<ActionResult<Room>> PostRoom(RoomDto room)
         {
             await _room.Create(room);
             return CreatedAtAction("GetRoom", new { id = room.Id }, room);

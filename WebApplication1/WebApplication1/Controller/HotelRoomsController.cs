@@ -27,7 +27,7 @@ namespace AsyncHotel.Controller
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<HotelRoom>> PostHotelRoom(HotelRoom hotelRoom, int hotelId)
+        public async Task<ActionResult<HotelRoom>> PostHotelRoom(HotelRoomDto hotelRoom, int hotelId)
         {
             await _hotelRoom.Create(hotelRoom, hotelId);
 
@@ -56,7 +56,7 @@ namespace AsyncHotel.Controller
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut]
         [Route("{hotelId}/{roomId}")]
-        public async Task<IActionResult> PutHotelRoom(HotelRoom hotelRoom, int hotelId, int roomId)
+        public async Task<IActionResult> PutHotelRoom(HotelRoomDto hotelRoom, int hotelId, int roomId)
         {
             if (hotelId != hotelRoom.HotelId || roomId != hotelRoom.RoomId)
                 return BadRequest();
@@ -69,7 +69,7 @@ namespace AsyncHotel.Controller
         // DELETE: api/HotelRooms/n/n
         [HttpDelete]
         [Route("{hotelId}/{roomId}")]
-        public async Task<ActionResult<HotelRoom>> DeleteHotelRoom(int hotelId, int roomId)
+        public async Task<ActionResult<HotelRoomDto>> DeleteHotelRoom(int hotelId, int roomId)
         {
             await _hotelRoom.DeleteHotelRoom(hotelId, roomId);
             return NoContent();

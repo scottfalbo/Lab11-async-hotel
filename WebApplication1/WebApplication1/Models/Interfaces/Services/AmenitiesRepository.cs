@@ -42,21 +42,12 @@ namespace AsyncHotel.Models.Interfaces.Services
         public async Task<AmenitiesDto> GetAmenity(int id)
         {
             return await _context.Amenities
+                .Where(x => x.Id == id)
                 .Select(amenity => new AmenitiesDto
                 {
                     Id = amenity.Id,
                     AmenityName = amenity.AmenityName
                 }).FirstOrDefaultAsync();
-            /*
-            AmenitiesDto amenity = await _context.Amenities.Where(x => x.Id == id)
-                                                        .Include(x => x.RoomAmenities)
-                                                        .ThenInclude(x => x.Room)
-                                                        .ThenInclude(x => x.HotelRooms)
-                                                        .ThenInclude(x => x.Hotel)
-                                                        .FirstOrDefaultAsync();
-            return amenity;
-            */
-
         }
 
         /// <summary>
@@ -71,14 +62,6 @@ namespace AsyncHotel.Models.Interfaces.Services
                     Id = amenity.Id,
                     AmenityName = amenity.AmenityName
                 }).ToListAsync();
-            /*
-            var amenities = await _context.Amenities.Include(x => x.RoomAmenities)
-                                                    .ThenInclude(x => x.Room)
-                                                    .ThenInclude(x => x.HotelRooms)
-                                                    .ThenInclude(x => x.Hotel)
-                                                    .ToListAsync();
-            return amenities;
-            */
         }
 
         /// <summary>

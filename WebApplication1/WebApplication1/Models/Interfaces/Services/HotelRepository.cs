@@ -36,7 +36,7 @@ namespace AsyncHotel.Models.Interfaces.Services
         /// <returns> Hotel object </returns>
         public async Task<HotelDto> GetHotel(int id)
         {
-            Hotel hotel = await _context.Hotels.FindAsync(id);
+            HotelDto hotel = await _context.Hotels.FindAsync(id);
             var hotelRooms = await _context.HotelRooms.Where(x => x.HotelId == id)
                                                       .Include(x => x.Room)
                                                       .ThenInclude(x => x.RoomAmenities)
@@ -80,7 +80,7 @@ namespace AsyncHotel.Models.Interfaces.Services
         /// <returns> no return </returns>
         public async Task DeleteHotel(int id)
         {
-            Hotel hotel = await GetHotel(id);
+            HotelDto hotel = await GetHotel(id);
             _context.Entry(hotel).State = EntityState.Deleted;
             await _context.SaveChangesAsync();
         }
