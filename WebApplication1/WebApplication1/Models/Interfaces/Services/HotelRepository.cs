@@ -1,4 +1,5 @@
 ﻿using AsyncHotel.Data;
+using AsyncHotel.Models.Api;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -33,10 +34,8 @@ namespace AsyncHotel.Models.Interfaces.Services
         /// </summary>
         /// <param name="id"> int hotelId </param>
         /// <returns> Hotel object </returns>
-        public async Task<Hotel> GetHotel(int id)
+        public async Task<HotelDto> GetHotel(int id)
         {
-            //  Hotel hotel = await _context.Hotels.FindAsync(id);
-            //return hotel;
             Hotel hotel = await _context.Hotels.FindAsync(id);
             var hotelRooms = await _context.HotelRooms.Where(x => x.HotelId == id)
                                                       .Include(x => x.Room)

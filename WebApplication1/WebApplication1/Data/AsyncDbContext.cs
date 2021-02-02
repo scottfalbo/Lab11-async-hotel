@@ -11,7 +11,7 @@ namespace AsyncHotel.Data
     {
         public DbSet<Hotel> Hotels { get; set; }
         public DbSet<Room> Rooms { get; set; }
-        public DbSet<Amenities> Amenities { get; set; }
+        public DbSet<AmenitiesDto> Amenities { get; set; }
         public DbSet<HotelRoom> HotelRooms { get; set; }
         public DbSet<RoomAmenities> RoomAmenities { get; set; }
 
@@ -84,18 +84,18 @@ namespace AsyncHotel.Data
                 }
                 );
 
-            modelBuilder.Entity<Amenities>().HasData(
-                new Amenities
+            modelBuilder.Entity<AmenitiesDto>().HasData(
+                new AmenitiesDto
                 {
                     Id = 1,
                     AmenityName = "Creepy old lady"
                 },
-                 new Amenities
+                 new AmenitiesDto
                  {
                      Id = 2,
                      AmenityName = "Stabbiness"
                  },
-                new Amenities
+                new AmenitiesDto
                 {
                     Id = 3,
                     AmenityName = "Mini bar"
