@@ -56,7 +56,7 @@ namespace AsyncHotel.Controller
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut]
         [Route("{hotelId}/{roomId}")]
-        public async Task<IActionResult> PutHotelRoom(HotelRoomDto hotelRoom, int hotelId, int roomId)
+        public async Task<IActionResult> PutHotelRoom(HotelRoom hotelRoom, int hotelId, int roomId)
         {
             if (hotelId != hotelRoom.HotelId || roomId != hotelRoom.RoomId)
                 return BadRequest();

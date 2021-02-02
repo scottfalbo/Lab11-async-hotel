@@ -36,7 +36,39 @@ An API for an international hotel chain.  The API should be able to return infor
 + `RoomAmenities` - many : 1 - `Amenities`
 
 ## Routing
-+ Will add routes and returns here. 
++ `/api/hotels`
+```
+{
+    "id": 1,
+    "name": "The Overlook",
+    "streetAddress": "333 Wonderview Avenue",
+    "city": "Estes Park",
+    "state": "Colorado",
+    "phone": "833-888-0237",
+    "rooms": [
+        {
+            "hotelID": 1,
+            "roomNumber": 237,
+            "rate": 66.60,
+            "petFriendly": false,
+            "roomID": 2,
+            "room": {
+                "id": 2,
+                "name": "Queen Suite",
+                "layout": "TwoBedroom",
+                "amenities": [
+                    {
+                        "id": 1,
+                        "name": "Bleeding walls"
+                    },
+                    {
+                        "id": 2,
+                        "name": "Creepy twins"
+                    }
+                ]
+            }
+        }
+```
 
 
 
@@ -61,7 +93,8 @@ An API for an international hotel chain.  The API should be able to return infor
     + Added an `IHotelRoom` interface, `HotelRoom` model, `RoomAmenities` model.
     + Updated services to `Include` all linked data when a query is made against any object.
     + Updated summary comments in service files. 
-
+  + **version 1.0.4** *02/01/2021 -
+    + Attempted to add some DTOs.  Everything is broken and nothing works now.   
 ## Attributions
 
 + [Code Fellows Entity Framework Setup](https://codefellows.github.io/seattle-dotnet-401d12/class-12/resources/ef-web-app)<br>

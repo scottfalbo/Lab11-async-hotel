@@ -11,7 +11,7 @@ namespace AsyncHotel.Models.Interfaces
         Task<HotelRoom> Create(HotelRoomDto hotelRoom, int hotelId);
         Task<HotelRoomDto> GetHotelRoom(int hotelId, int roomId);
         Task<List<HotelRoomDto>> GetHotelRooms(int hotelId);
-        Task<HotelRoom> UpdateHotelRoom(HotelRoomDto hotelRoom);
+        Task<HotelRoom> UpdateHotelRoom(HotelRoom hotelRoom);
         Task DeleteHotelRoom(int hotelId, int roomId);
     }
 }

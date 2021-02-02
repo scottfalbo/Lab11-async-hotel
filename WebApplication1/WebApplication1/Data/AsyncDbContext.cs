@@ -1,4 +1,5 @@
 ﻿using AsyncHotel.Models;
+using AsyncHotel.Models.Api;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ namespace AsyncHotel.Data
     {
         public DbSet<Hotel> Hotels { get; set; }
         public DbSet<Room> Rooms { get; set; }
-        public DbSet<AmenitiesDto> Amenities { get; set; }
+        public DbSet<Amenities> Amenities { get; set; }
         public DbSet<HotelRoom> HotelRooms { get; set; }
         public DbSet<RoomAmenities> RoomAmenities { get; set; }
 

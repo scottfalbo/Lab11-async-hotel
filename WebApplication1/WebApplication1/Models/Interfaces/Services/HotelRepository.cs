@@ -22,8 +22,16 @@ namespace AsyncHotel.Models.Interfaces.Services
         /// </summary>
         /// <param name="hotel"> new Hotel object </param>
         /// <returns> newly added Hotel object </returns>
-        public async Task<Hotel> Create(Hotel hotel)
+        public async Task<Hotel> Create(HotelDto inboudData)
         {
+            Hotel hotel = new Hotel()
+            {
+                Name = inboudData.Name,
+                StreetAddress = inboudData.StreetAddress,
+                City = inboudData.City,
+                State = inboudData.State,
+                Phone = inboudData.Phone,
+            };
             _context.Entry(hotel).State = EntityState.Added;
             await _context.SaveChangesAsync();
             return hotel;
@@ -36,28 +44,33 @@ namespace AsyncHotel.Models.Interfaces.Services
         /// <returns> Hotel object </returns>
         public async Task<HotelDto> GetHotel(int id)
         {
-            HotelDto hotel = await _context.Hotels.FindAsync(id);
-            var hotelRooms = await _context.HotelRooms.Where(x => x.HotelId == id)
-                                                      .Include(x => x.Room)
-                                                      .ThenInclude(x => x.RoomAmenities)
-                                                      .ThenInclude(x => x.Amenities)
-                                                      .ToListAsync();
-            hotel.HotelRooms = hotelRooms;
-            return hotel;
+            return await _context.Hotels
+                .Where(x => x.Id == id)
+                .Select(hotel => new HotelDto
+                {
+                    Name = hotel.Name,
+                    StreetAddress = hotel.StreetAddress,
+                    City = hotel.City,
+                    State = hotel.State,
+                    Phone = hotel.Phone
+                }).FirstOrDefaultAsync();         
         }
 
         /// <summary>
         /// Get a list of all of the Hotel objects in the DB
         /// </summary>
         /// <returns> List<Hotels> all hotels </returns>
-        public async Task<List<Hotel>> GetHotels()
+        public async Task<List<HotelDto>> GetHotels()
         {
-            var hotels = await _context.Hotels.Include(x => x.HotelRooms)
-                                                    .ThenInclude(x => x.Room)
-                                                    .ThenInclude(x => x.RoomAmenities)
-                                                    .ThenInclude(x => x.Amenities)
-                                                    .ToListAsync();
-            return hotels;
+            return await _context.Hotels
+                .Select(hotels => new HotelDto
+                {
+                    Name = hotels.Name,
+                    StreetAddress = hotels.StreetAddress,
+                    City = hotels.City,
+                    State = hotels.State,
+                    Phone = hotels.Phone
+                }).ToListAsync();
         }
 
         /// <summary>
