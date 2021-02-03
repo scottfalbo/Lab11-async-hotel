@@ -24,13 +24,11 @@ namespace AsyncHotel.Models.Interfaces.Services
         /// <returns> the same object </returns>
         public async Task<Room> Create(RoomDto inboundData)
         {
-            // Converts the RoomDto's input string to enum value           
-            Enum.TryParse(inboundData.Layout, out Layouts layout);
 
             Room room = new Room()
             {
                 RoomName = inboundData.Name,
-                Layout = layout
+                Layout = inboundData.Layout
             };
             _context.Entry(room).State = EntityState.Added;
             await _context.SaveChangesAsync();
@@ -50,7 +48,7 @@ namespace AsyncHotel.Models.Interfaces.Services
                 {
                     Id = room.Id,
                     Name = room.RoomName,
-                    Layout = room.Layout.ToString(),
+                    Layout = room.Layout,
                     Amenities = room.RoomAmenities
                                 .Select(amenities => new AmenitiesDto
                                 {
@@ -72,7 +70,7 @@ namespace AsyncHotel.Models.Interfaces.Services
                 {
                     Id = room.Id,
                     Name = room.RoomName,
-                    Layout = room.Layout.ToString(),
+                    Layout = room.Layout,
                     Amenities = room.RoomAmenities
                                 .Select(amenities => new AmenitiesDto
                                 {
@@ -88,20 +86,18 @@ namespace AsyncHotel.Models.Interfaces.Services
         /// <param name="id"> int roomId </param>
         /// <param name="room"> Room object </param>
         /// <returns> updated Room object </returns>
-        public async Task<RoomDto> UpdateRoom(int id, RoomDto room)
+        public async Task<Room> UpdateRoom(int id, RoomDto room)
         {
-            Enum.TryParse(room.Layout, out Layouts layout);
-
             Room updatedRoom = new Room()
             {
                 Id = id,
                 RoomName = room.Name,
-                Layout = layout
+                Layout = room.Layout
             };
 
             _context.Entry(updatedRoom).State = EntityState.Modified;
             await _context.SaveChangesAsync();
-            return room;
+            return updatedRoom;
         }
 
         /// <summary>

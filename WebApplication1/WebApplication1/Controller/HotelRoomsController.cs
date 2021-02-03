@@ -69,9 +69,9 @@ namespace AsyncHotel.Controller
         // DELETE: api/HotelRooms/n/n
         [HttpDelete]
         [Route("{hotelId}/{roomId}")]
-        public async Task<ActionResult<HotelRoomDto>> DeleteHotelRoom(int hotelId, int roomId)
+        public async Task<ActionResult<HotelRoomDto>> DeleteHotelRoom(int hotelId, int roomNumber)
         {
-            await _hotelRoom.DeleteHotelRoom(hotelId, roomId);
+            await _hotelRoom.DeleteHotelRoom(hotelId, roomNumber);
             return NoContent();
         }
     }

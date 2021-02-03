@@ -71,8 +71,15 @@ namespace AsyncHotel.Models.Interfaces.Services
         /// <returns> updated Amenties object </returns>
         public async Task<AmenitiesDto> UpdateAmenities(int id, AmenitiesDto amenities)
         {
-            _context.Entry(amenities).State = EntityState.Modified;
+            Amenities updatedAmenity = new Amenities()
+            {
+                Id = id,
+                AmenityName = amenities.AmenityName
+            };
+
+            _context.Entry(updatedAmenity).State = EntityState.Modified;
             await _context.SaveChangesAsync();
+
             return amenities;
         }
 
