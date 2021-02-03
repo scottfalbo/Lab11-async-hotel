@@ -84,9 +84,18 @@ namespace AsyncHotel.Models.Interfaces.Services
         /// <returns> no return </returns>
         public async Task DeleteAmenity(int id)
         {
+            /*
             AmenitiesDto amenities = await GetAmenity(id);
             _context.Entry(amenities).State = EntityState.Deleted;
             await _context.SaveChangesAsync();
+            */
+            /*
+            Amenities amenity = await _context.Amenities
+                               .Where(x => x.Id == amenity.Id);
+            _context.Entry(amenity).State = EntityState.Deleted;
+            await _context.SaveChangesAsync();
+            */
+
         }
 
     }

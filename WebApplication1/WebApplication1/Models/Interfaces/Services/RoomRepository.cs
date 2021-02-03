@@ -45,12 +45,19 @@ namespace AsyncHotel.Models.Interfaces.Services
         public async Task<RoomDto> GetRoom(int id)
         {
             return await _context.Rooms
-                .Where(x => x.Id == id )
+                .Where(x => x.Id == id)
                 .Select(room => new RoomDto
                 {
                     Id = room.Id,
                     Name = room.RoomName,
-                    Layout = room.Layout.ToString()
+                    Layout = room.Layout.ToString(),
+                    Amenities = room.RoomAmenities
+                                .Select(amenities => new AmenitiesDto
+                                {
+                                    Id = amenities.Amenities.Id,
+                                    AmenityName = amenities.Amenities.AmenityName
+                                }).ToList()
+
                 }).FirstOrDefaultAsync();
         }
 
@@ -65,7 +72,13 @@ namespace AsyncHotel.Models.Interfaces.Services
                 {
                     Id = room.Id,
                     Name = room.RoomName,
-                    Layout = room.Layout.ToString()
+                    Layout = room.Layout.ToString(),
+                    Amenities = room.RoomAmenities
+                                .Select(amenities => new AmenitiesDto
+                                {
+                                    Id = amenities.Amenities.Id,
+                                    AmenityName = amenities.Amenities.AmenityName
+                                }).ToList()
                 }).ToListAsync();
         }
 

@@ -72,7 +72,7 @@ namespace AsyncHotel.Controller
 
         // DELETE: api/Amenities/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<AmenitiesDto>> DeleteAmenities(int id)
+        public async Task<ActionResult<Amenities>> DeleteAmenities(int id)
         {
             await _amenity.DeleteAmenity(id);
             return NoContent();
