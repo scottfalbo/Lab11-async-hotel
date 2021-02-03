@@ -22,7 +22,7 @@ namespace AsyncHotel.Models.Interfaces.Services
         /// </summary>
         /// <param name="amenities"> Amenties object </param>
         /// <returns> the new amenity object </returns>
-        public async Task<Amenities> Create(AmenitiesDto inboundData)
+        public async Task<Amenities> Create(Amenities inboundData)
         {
             Amenities amenity = new Amenities()
             {

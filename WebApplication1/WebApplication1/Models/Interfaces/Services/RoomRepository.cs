@@ -22,12 +22,12 @@ namespace AsyncHotel.Models.Interfaces.Services
         /// </summary>
         /// <param name="room"> Room object </param>
         /// <returns> the same object </returns>
-        public async Task<Room> Create(RoomDto inboundData)
+        public async Task<Room> Create(Room inboundData)
         {
 
             Room room = new Room()
             {
-                RoomName = inboundData.Name,
+                RoomName = inboundData.RoomName,
                 Layout = inboundData.Layout
             };
             _context.Entry(room).State = EntityState.Added;

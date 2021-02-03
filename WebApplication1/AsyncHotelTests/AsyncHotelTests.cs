@@ -6,6 +6,7 @@ using AsyncHotel.Data;
 using Xunit;
 using System.Threading.Tasks;
 using AsyncHotel.Models.Interfaces.Services;
+using AsyncHotel.Models.Api;
 
 namespace AsyncHotelTests
 {
@@ -14,7 +15,12 @@ namespace AsyncHotelTests
         [Fact]
         protected async Task<Room> CreateAndSaveTestRoom()
         {
-            var room = new Room { };
+            var room = new Room
+            {
+                Id = 1,
+                RoomName = "Test Room", 
+                Layout = Layouts.TwoBedroom 
+            };
             _db.Rooms.Add(room);
             await _db.SaveChangesAsync();
             Assert.NotEqual(0, room.Id); // Sanity check
@@ -24,7 +30,15 @@ namespace AsyncHotelTests
         [Fact]
         protected async Task<Hotel> CreateAndSaveTestHotel()
         {
-            var hotel = new Hotel { };
+            var hotel = new Hotel
+            {
+                Id = 1,
+                Name = "Test Hotel",
+                StreetAddress = "123 Somewhere",
+                City = "TestVilee",
+                State = "StatesVille",
+                Phone = "816-342-5462"
+            };
             _db.Hotels.Add(hotel);
             await _db.SaveChangesAsync();
             Assert.NotEqual(0, hotel.Id); // Sanity check
@@ -32,28 +46,20 @@ namespace AsyncHotelTests
         }
 
         [Fact]
-        public async Task Can_enroll_and_drop_a_student()
+        public async Task Can_Do_Something()
         {
-            // Arrange
-            var room = await CreateAndSaveTestRoom();
-            var hotel = await CreateAndSaveTestHotel();
+            var room = new Room()
+            {
+                Id = 1,
+                RoomName = "Cat Shack",
+                Layout = Layouts.Studio
+            };
 
-            //var repository = new HotelRepository(_db);
+            var repository = new RoomRepository(_db);
 
-            // Act
-            //await repository.AddRoom(c.Id, student.Id);
+            var testRoom = await repository.Create(room);
 
-            // Assert
-           // var actualCourse = await repository.GetOne(course.Id);
-
-           // Assert.Contains(actualCourse.Enrollments, e => e.StudentId == student.Id);
-
-            // Act
-           // await repository.RemoveStudentFromCourse(course.Id, student.Id);
-
-            // Assert
-            //actualCourse = await repository.GetOne(course.Id);
-           // Assert.DoesNotContain(actualCourse.Enrollments, e => e.StudentId == student.Id);
+            Assert.Equal(room.Id, testRoom.Id);
         }
     }
 }

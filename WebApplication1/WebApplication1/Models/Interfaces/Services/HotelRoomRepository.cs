@@ -23,7 +23,7 @@ namespace AsyncHotel.Models.Interfaces.Services
         /// <param name="hotelRoom"> HotelRoom object </param>
         /// <param name="hotelId"> int hotelId </param>
         /// <returns> new HotelRoom object </returns>
-        public async Task<HotelRoom> Create(HotelRoomDto inboudData, int hotelId)
+        public async Task<HotelRoom> Create(HotelRoom inboudData, int hotelId)
         {
             HotelRoom hotelRoom = new HotelRoom()
             {

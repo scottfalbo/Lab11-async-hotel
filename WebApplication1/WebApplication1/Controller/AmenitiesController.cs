@@ -64,7 +64,7 @@ namespace AsyncHotel.Controller
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<Amenities>> PostAmenities(AmenitiesDto amenities)
+        public async Task<ActionResult<Amenities>> PostAmenities(Amenities amenities)
         {
             await _amenity.Create(amenities);
             return CreatedAtAction("GetAmenities", new { id = amenities.Id }, amenities);
