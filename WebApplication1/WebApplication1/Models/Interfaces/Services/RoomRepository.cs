@@ -88,9 +88,18 @@ namespace AsyncHotel.Models.Interfaces.Services
         /// <param name="id"> int roomId </param>
         /// <param name="room"> Room object </param>
         /// <returns> updated Room object </returns>
-        public async Task<Room> UpdateRoom(int id, Room room)
+        public async Task<RoomDto> UpdateRoom(int id, RoomDto room)
         {
-            _context.Entry(room).State = EntityState.Modified;
+            Enum.TryParse(room.Layout, out Layouts layout);
+
+            Room updatedRoom = new Room()
+            {
+                Id = id,
+                RoomName = room.Name,
+                Layout = layout
+            };
+
+            _context.Entry(updatedRoom).State = EntityState.Modified;
             await _context.SaveChangesAsync();
             return room;
         }
@@ -119,7 +128,7 @@ namespace AsyncHotel.Models.Interfaces.Services
         /// <returns> no return </returns>
         public async Task DeleteRoom(int id)
         {
-            RoomDto room = await GetRoom(id);
+            Room room = await _context.Rooms.FindAsync(id);
             _context.Entry(room).State = EntityState.Deleted;
             await _context.SaveChangesAsync();
         }
@@ -132,11 +141,9 @@ namespace AsyncHotel.Models.Interfaces.Services
         /// <returns> no return </returns>
         public async Task RemoveAmenityFromRoom(int roomId, int amenitiesId)
         {
-            var result = await _context.RoomAmenities.FirstOrDefaultAsync(
-                x => x.RoomId == roomId && x.AmenitiesId == amenitiesId);
-
-            _context.Entry(result).State = EntityState.Deleted;
-
+            var roomAmenity = await _context.RoomAmenities.FirstOrDefaultAsync(
+                x => x.AmenitiesId == amenitiesId && x.RoomId == roomId);
+            _context.Entry(roomAmenity).State = EntityState.Deleted;
             await _context.SaveChangesAsync();
         }
     }

@@ -5,29 +5,37 @@ using AsyncHotel.Models;
 using AsyncHotel.Data;
 using Xunit;
 using System.Threading.Tasks;
+using AsyncHotel.Models.Interfaces.Services;
 
 namespace AsyncHotelTests
 {
     public class AsyncHotelTests : Mock
     {
-        [Fact]
-        protected async Task<Hotel> CreateAndSaveTestStudent()
-        {
-            var hotel = new Hotel { };
-            _db.Hotels.Add(hotel);
-            await _db.SaveChangesAsync();
-            Assert.NotEqual(0, hotel.Id); // Sanity check
-            return hotel;
-        }
+
 
         [Fact]
-        protected async Task<Hotel> CreateAndSaveTestCourse()
+        public async Task Can_enroll_and_drop_a_student()
         {
-            var hotel = new Hotel { };
-            _db.Hotels.Add(hotel);
-            await _db.SaveChangesAsync();
-            Assert.NotEqual(0, hotel.Id); // Sanity check
-            return hotel;
+            // Arrange
+            var room = await CreateAndSaveTestRoom();
+            var hotel = await CreateAndSaveTestHotel();
+
+            //var repository = new HotelRepository(_db);
+
+            // Act
+            //await repository.AddRoom(c.Id, student.Id);
+
+            // Assert
+           // var actualCourse = await repository.GetOne(course.Id);
+
+           // Assert.Contains(actualCourse.Enrollments, e => e.StudentId == student.Id);
+
+            // Act
+           // await repository.RemoveStudentFromCourse(course.Id, student.Id);
+
+            // Assert
+            //actualCourse = await repository.GetOne(course.Id);
+           // Assert.DoesNotContain(actualCourse.Enrollments, e => e.StudentId == student.Id);
         }
     }
 }
