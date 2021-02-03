@@ -1,4 +1,5 @@
 ﻿using AsyncHotel.Models;
+using AsyncHotel.Models.Api;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -25,7 +26,7 @@ namespace AsyncHotel.Data
             // base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<HotelRoom>().HasKey(
-                x => new { x.HotelId, x.RoomId });
+                x => new { x.HotelId, x.RoomNumber });
 
             modelBuilder.Entity<RoomAmenities>().HasKey(
                 x => new { x.RoomId, x.AmenitiesId });
@@ -121,16 +122,19 @@ namespace AsyncHotel.Data
                 new HotelRoom
                 {
                     HotelId = 1,
+                    RoomNumber = 1,
                     RoomId = 1
                 },
                 new HotelRoom
                 {
                     HotelId = 2,
+                    RoomNumber = 2,
                     RoomId = 2
                 },
                 new HotelRoom
                 {
                     HotelId = 3,
+                    RoomNumber = 3,
                     RoomId = 3
                 });
 

@@ -1,17 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace AsyncHotel.Models
+namespace AsyncHotel.Models.Api
 {
-    public class Amenities
+    public class AmenitiesDto
     {
         public int Id { get; set; }
-        [Required]
         public string AmenityName { get; set; }
-        [Required]
-        public List<RoomAmenities> RoomAmenities { get; set; }
     }
 }

@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30804.86
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AsyncHotel", "WebApplication1\AsyncHotel.csproj", "{9250A0B2-4EB1-4B03-ABCF-83DCD9999748}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AsyncHotel", "WebApplication1\AsyncHotel.csproj", "{9250A0B2-4EB1-4B03-ABCF-83DCD9999748}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AsyncHotelTests", "AsyncHotelTests\AsyncHotelTests.csproj", "{E012AC40-9D2A-4468-9966-8E2336F2050F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{9250A0B2-4EB1-4B03-ABCF-83DCD9999748}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9250A0B2-4EB1-4B03-ABCF-83DCD9999748}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9250A0B2-4EB1-4B03-ABCF-83DCD9999748}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E012AC40-9D2A-4468-9966-8E2336F2050F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E012AC40-9D2A-4468-9966-8E2336F2050F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E012AC40-9D2A-4468-9966-8E2336F2050F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E012AC40-9D2A-4468-9966-8E2336F2050F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

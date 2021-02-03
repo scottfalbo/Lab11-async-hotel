@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using AsyncHotel.Data;
 using AsyncHotel.Models;
 using AsyncHotel.Models.Interfaces;
+using AsyncHotel.Models.Api;
 
 namespace AsyncHotel.Controller
 {
@@ -37,7 +38,7 @@ namespace AsyncHotel.Controller
         [HttpGet]
         [Route("{hotelId}")]
         //[Route]
-        public async Task<ActionResult<IEnumerable<HotelRoom>>> GetHotelRooms(int hotelId)
+        public async Task<ActionResult<IEnumerable<HotelRoomDto>>> GetHotelRooms(int hotelId)
         {
             return await _hotelRoom.GetHotelRooms(hotelId);
         }
@@ -45,7 +46,7 @@ namespace AsyncHotel.Controller
         // GET: api/HotelRooms/n/n
         [HttpGet]
         [Route("{hotelId}/{roomId}")]
-        public async Task<ActionResult<HotelRoom>> GetHotelRoom(int hotelId, int roomId)
+        public async Task<ActionResult<HotelRoomDto>> GetHotelRoom(int hotelId, int roomId)
         {
             return await _hotelRoom.GetHotelRoom(hotelId, roomId);
         }
@@ -68,9 +69,9 @@ namespace AsyncHotel.Controller
         // DELETE: api/HotelRooms/n/n
         [HttpDelete]
         [Route("{hotelId}/{roomId}")]
-        public async Task<ActionResult<HotelRoom>> DeleteHotelRoom(int hotelId, int roomId)
+        public async Task<ActionResult<HotelRoomDto>> DeleteHotelRoom(int hotelId, int roomNumber)
         {
-            await _hotelRoom.DeleteHotelRoom(hotelId, roomId);
+            await _hotelRoom.DeleteHotelRoom(hotelId, roomNumber);
             return NoContent();
         }
     }

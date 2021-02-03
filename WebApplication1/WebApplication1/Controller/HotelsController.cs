@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using AsyncHotel.Data;
 using AsyncHotel.Models;
 using AsyncHotel.Models.Interfaces;
+using AsyncHotel.Models.Api;
 
 namespace AsyncHotel.Controller
 {
@@ -24,7 +25,7 @@ namespace AsyncHotel.Controller
 
         // GET: api/Hotels
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Hotel>>> GetHotels()
+        public async Task<ActionResult<IEnumerable<HotelDto>>> GetHotels()
         {
 
             return Ok(await _hotel.GetHotels());
@@ -32,7 +33,7 @@ namespace AsyncHotel.Controller
 
         // GET: api/Hotels/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Hotel>> GetHotel(int id)
+        public async Task<ActionResult<HotelDto>> GetHotel(int id)
         {
             var hotel = await _hotel.GetHotel(id);
 

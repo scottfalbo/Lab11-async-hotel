@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AsyncHotel.Migrations
 {
     [DbContext(typeof(AsyncDbContext))]
-    [Migration("20210129233214_hotel-room-join")]
-    partial class hotelroomjoin
+    [Migration("20210203003137_freshstart-again-again")]
+    partial class freshstartagainagain
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -126,7 +126,7 @@ namespace AsyncHotel.Migrations
                     b.Property<int>("HotelId")
                         .HasColumnType("int");
 
-                    b.Property<int>("RoomId")
+                    b.Property<int>("RoomNumber")
                         .HasColumnType("int");
 
                     b.Property<bool>("PetFriendly")
@@ -135,10 +135,10 @@ namespace AsyncHotel.Migrations
                     b.Property<decimal>("Rate")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("RoomNumber")
+                    b.Property<int>("RoomId")
                         .HasColumnType("int");
 
-                    b.HasKey("HotelId", "RoomId");
+                    b.HasKey("HotelId", "RoomNumber");
 
                     b.HasIndex("RoomId");
 
@@ -148,26 +148,26 @@ namespace AsyncHotel.Migrations
                         new
                         {
                             HotelId = 1,
-                            RoomId = 1,
+                            RoomNumber = 1,
                             PetFriendly = false,
                             Rate = 0m,
-                            RoomNumber = 0
+                            RoomId = 1
                         },
                         new
                         {
                             HotelId = 2,
-                            RoomId = 2,
+                            RoomNumber = 2,
                             PetFriendly = false,
                             Rate = 0m,
-                            RoomNumber = 0
+                            RoomId = 2
                         },
                         new
                         {
                             HotelId = 3,
-                            RoomId = 3,
+                            RoomNumber = 3,
                             PetFriendly = false,
                             Rate = 0m,
-                            RoomNumber = 0
+                            RoomId = 3
                         });
                 });
 

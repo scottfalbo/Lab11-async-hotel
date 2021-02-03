@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,6 +37,17 @@ namespace WebApplication1
                 options.SerializerSettings.ReferenceLoopHandling =
                 Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
+            services.AddSwaggerGen(options =>
+            {
+                // Make sure get the "using Statement"
+                options.SwaggerDoc("v1", new OpenApiInfo()
+                {
+                    Title = "Async Hotel",
+                    Version = "v1",
+                });
+            });
+
+
             // Set up a context to our database for us in the App.
             services.AddDbContext<AsyncDbContext>(options => {
                 string connectionString = Configuration.GetConnectionString("DefaultConnection");
@@ -58,13 +70,18 @@ namespace WebApplication1
 
             app.UseRouting();
 
+            app.UseSwagger(options =>
+            {
+                options.RouteTemplate = "/api/{documentName}/swagger.json";
+            });
+            app.UseSwaggerUI(options =>
+            {
+                options.SwaggerEndpoint("/api/v1/swagger.json", "Async Hotel");
+                options.RoutePrefix = ""; //if we want a real homepage this is "docs"
+            });
+
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapGet("/", async context =>
-                {
-                    await context.Response.WriteAsync("Hello World!");
-                });
-
                 endpoints.MapControllers();
             });
         }
