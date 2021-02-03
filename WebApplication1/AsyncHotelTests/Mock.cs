@@ -34,23 +34,6 @@ namespace AsyncHotelTests
             _db?.Dispose();
             _connection?.Dispose();
         }
-        protected async Task<Room> CreateAndSaveTestRoom()
-        {
-            var room = new Room { };
-            _db.Rooms.Add(room);
-            await _db.SaveChangesAsync();
-            Assert.NotEqual(0, room.Id); // Sanity check
-            return room;
-        }
-
-        protected async Task<Hotel> CreateAndSaveTestHotel()
-        {
-            var hotel = new Hotel { };
-            _db.Hotels.Add(hotel);
-            await _db.SaveChangesAsync();
-            Assert.NotEqual(0, hotel.Id); // Sanity check
-            return hotel;
-        }
 
     }
 }

@@ -26,6 +26,7 @@ namespace AsyncHotel.Models.Interfaces.Services
         {
             Hotel hotel = new Hotel()
             {
+                Id =inboudData.Id,
                 Name = inboudData.Name,
                 StreetAddress = inboudData.StreetAddress,
                 City = inboudData.City,
@@ -44,16 +45,52 @@ namespace AsyncHotel.Models.Interfaces.Services
         /// <returns> Hotel object </returns>
         public async Task<HotelDto> GetHotel(int id)
         {
-            return await _context.Hotels
+            HotelDto hotel = await _context.Hotels
                 .Where(x => x.Id == id)
-                .Select(hotel => new HotelDto
+                .Select(x => new HotelDto()
                 {
-                    Name = hotel.Name,
-                    StreetAddress = hotel.StreetAddress,
-                    City = hotel.City,
-                    State = hotel.State,
-                    Phone = hotel.Phone
-                }).FirstOrDefaultAsync();         
+                    Id = x.Id,
+                    Name = x.Name,
+                    StreetAddress = x.StreetAddress,
+                    City = x.City,
+                    State = x.State,
+                    Phone = x.Phone,
+                    Rooms = x.HotelRooms
+                    .Select(y => new HotelRoomDto()
+                    {
+                        HotelId = y.HotelId,
+                        RoomNumber = y.RoomNumber,
+                        Rate = y.Rate,
+                        PetFriendly = y.PetFriendly,
+                        RoomId = y.RoomId,
+                        Room = y.Room.HotelRooms
+                        .Select(z => new RoomDto()
+                    {
+                        Id = z.Room.Id,
+                        Name = z.Room.RoomName,
+                        Layout = z.Room.Layout,
+                    })
+                    .FirstOrDefault()
+                })
+                .ToList()
+                })
+                .FirstOrDefaultAsync();
+
+            foreach (var hotelRoom in hotel.Rooms)
+            {
+                var roomAmenity = await _context.RoomAmenities
+                .Where(x => x.RoomId == hotelRoom.RoomId)
+                .Select(y => new AmenitiesDto()
+                {
+                    Id = y.Amenities.Id,
+                    AmenityName = y.Amenities.AmenityName
+                })
+                .ToListAsync();
+
+
+            hotelRoom.Room.Amenities = roomAmenity;
+            }
+            return hotel;
         }
 
         /// <summary>
@@ -62,15 +99,53 @@ namespace AsyncHotel.Models.Interfaces.Services
         /// <returns> List<Hotels> all hotels </returns>
         public async Task<List<HotelDto>> GetHotels()
         {
-            return await _context.Hotels
-                .Select(hotels => new HotelDto
+            var hotels = await _context.Hotels
+                .Select(x => new HotelDto()
                 {
-                    Name = hotels.Name,
-                    StreetAddress = hotels.StreetAddress,
-                    City = hotels.City,
-                    State = hotels.State,
-                    Phone = hotels.Phone
-                }).ToListAsync();
+                    Id = x.Id,
+                    Name = x.Name,
+                    StreetAddress = x.StreetAddress,
+                    City = x.City,
+                    State = x.State,
+                    Phone = x.Phone,
+                    Rooms = x.HotelRooms
+                    .Select(y => new HotelRoomDto()
+                    {
+                        HotelId = y.HotelId,
+                        RoomNumber = y.RoomNumber,
+                        Rate = y.Rate,
+                        PetFriendly = y.PetFriendly,
+                        RoomId = y.RoomId,
+                        Room = y.Room.HotelRooms
+                        .Select(z => new RoomDto()
+                        {
+                            Id = z.Room.Id,
+                            Name = z.Room.RoomName,
+                            Layout = z.Room.Layout,
+                        })
+                        .FirstOrDefault()
+                    })
+                    .ToList()
+                })
+                .ToListAsync();
+
+            foreach (var hotel in hotels)
+            {
+                foreach (var rooms in hotel.Rooms)
+                {
+                    var amenity = await _context.RoomAmenities
+                    .Where(x => x.RoomId == rooms.RoomId)
+                    .Select(y => new AmenitiesDto()
+                    {
+                        Id = y.Amenities.Id,
+                        AmenityName = y.Amenities.AmenityName
+                    })
+                    .ToListAsync();
+                    rooms.Room.Amenities = amenity;
+                }
+            }
+
+            return hotels;
         }
 
         /// <summary>
@@ -81,9 +156,18 @@ namespace AsyncHotel.Models.Interfaces.Services
         /// <returns> updated Hotel object </returns>
         public async Task<Hotel> UpdateHotel(int id, Hotel hotel)
         {
-            _context.Entry(hotel).State = EntityState.Modified;
+            Hotel updatedHotel = new Hotel()
+            {
+                Id = hotel.Id,
+                Name = hotel.Name,
+                StreetAddress = hotel.StreetAddress,
+                City = hotel.City,
+                State = hotel.State,
+                Phone = hotel.Phone
+            };
+            _context.Entry(updatedHotel).State = EntityState.Modified;
             await _context.SaveChangesAsync();
-            return hotel;
+            return updatedHotel;
         }
 
         /// <summary>
@@ -93,7 +177,7 @@ namespace AsyncHotel.Models.Interfaces.Services
         /// <returns> no return </returns>
         public async Task DeleteHotel(int id)
         {
-            HotelDto hotel = await GetHotel(id);
+            Hotel hotel = await _context.Hotels.FindAsync(id);
             _context.Entry(hotel).State = EntityState.Deleted;
             await _context.SaveChangesAsync();
         }

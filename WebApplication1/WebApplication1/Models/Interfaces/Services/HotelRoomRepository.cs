@@ -98,18 +98,18 @@ namespace AsyncHotel.Models.Interfaces.Services
                      PetFriendly = x.PetFriendly,
                      RoomId = x.RoomId,
                      Room = new RoomDto()
-                 {
-                     Id = x.Room.Id,
-                     Name = x.Room.RoomName,
-                     Layout = x.Room.Layout,
-                     Amenities = x.Room.RoomAmenities
-                            .Select(x => new AmenitiesDto()
-                            {
-                                Id = x.Amenities.Id,
-                                AmenityName = x.Amenities.AmenityName        
-                            })
-                            .ToList()
-                 }
+                     {
+                         Id = x.Room.Id,
+                         Name = x.Room.RoomName,
+                         Layout = x.Room.Layout,
+                         Amenities = x.Room.RoomAmenities
+                                .Select(x => new AmenitiesDto()
+                                {
+                                    Id = x.Amenities.Id,
+                                    AmenityName = x.Amenities.AmenityName        
+                                })
+                                .ToList()
+                     }
              })
              .ToListAsync();
 
