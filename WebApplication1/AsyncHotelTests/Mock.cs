@@ -15,6 +15,7 @@ namespace AsyncHotelTests
     {
         private readonly SqliteConnection _connection;
         protected readonly AsyncDbContext _db;
+        
 
         /// <summary>
         /// Constructor to create a mock database based on the AsyncDbContext

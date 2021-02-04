@@ -69,5 +69,12 @@ namespace AsyncHotelTests
             var result = await repository.GetHotel(4);
             Assert.Null(result);
         }
+
+
+        [Fact]
+        public async Task Can_Register_A_New_User_And_Add_Them_To_The_DB()
+        {
+            
+        }
     }
 }
