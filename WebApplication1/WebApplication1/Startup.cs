@@ -1,9 +1,11 @@
 using AsyncHotel.Data;
+using AsyncHotel.Models;
 using AsyncHotel.Models.Interfaces;
 using AsyncHotel.Models.Interfaces.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -32,6 +34,13 @@ namespace WebApplication1
             services.AddMvc();
             services.AddControllers();
 
+            services.AddIdentity<AppUser, IdentityRole>(options =>
+           {
+               //options.User.RequireUniqueEmail = true
+               // set unique rules for users here 
+           })
+           .AddEntityFrameworkStores<AsyncDbContext>();
+
             // Newtonsoft to prevent infinite reference looping
             services.AddControllers().AddNewtonsoftJson(options =>
                 options.SerializerSettings.ReferenceLoopHandling =
@@ -54,10 +63,12 @@ namespace WebApplication1
                 options.UseSqlServer(connectionString);
             });
 
+            
             services.AddTransient<IRoom, RoomRepository>();
             services.AddTransient<IHotel, HotelRepository>();
             services.AddTransient<IAmenities, AmenitiesRepository>();
             services.AddTransient<IHotelRoom, HotelRoomRepository>();
+            services.AddTransient<IUserService, IdentityUserService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
