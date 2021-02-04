@@ -10,7 +10,7 @@ namespace AsyncHotel.Models
 {
     public class Hotel
     {
-        
+        [Required]
         public int Id { get; set; }
         [Required]
         public string Name { get; set; }
@@ -20,7 +20,7 @@ namespace AsyncHotel.Models
         public string City { get; set; }
         [Required]
         public string State { get; set; }
-        [Required]
+        
         public string Country { get; set; }
         [Required]
         public string Phone { get; set; }

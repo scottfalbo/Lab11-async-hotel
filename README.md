@@ -1,4 +1,6 @@
 # Lab11 Async Hotel
+[Live Deployment](https://asynchotel20210202164136.azurewebsites.net/index.html)<br>
+
 
 **Author**: Scott Falbo
 
@@ -6,9 +8,10 @@
 
 + [Overview](#overview)
 + [Getting Started](#getting-started)
-+ [Example](#example)
++ [ERD](#erd)
 + [Relationships](#relationships)
 + [Routing](#routing)
++ [Identity](#identity)
 + [Change Log](#change-log)
 + [Attributions](#attributions)
 
@@ -26,7 +29,7 @@ An API for an international hotel chain.  The API should be able to return infor
   + `/amenities` - returns data about the amenities
 
 
-## Example
+## ERD
 ![Async ERD](./assets/AsyncInnERD.png)<br>
 
 ## Relationships
@@ -39,37 +42,89 @@ An API for an international hotel chain.  The API should be able to return infor
 + `/api/hotels`
 ```
 {
-    "id": 1,
-    "name": "The Overlook",
-    "streetAddress": "333 Wonderview Avenue",
-    "city": "Estes Park",
-    "state": "Colorado",
-    "phone": "833-888-0237",
-    "rooms": [
+  "id": 0,
+  "name": "string",
+  "streetAddress": "string",
+  "city": "string",
+  "state": "string",
+  "phone": "string",
+  "rooms": [
+    {
+      "hotelId": 0,
+      "roomNumber": 0,
+      "rate": 0,
+      "petFriendly": true,
+      "roomId": 0,
+      "room": {
+        "id": 0,
+        "name": "string",
+        "layout": 0,
+        "amenities": [
+          {
+            "id": 0,
+            "amenityName": "string"
+          }
+        ]
+      }
+  }
+```
++ `/api/hotelrooms`
+```
+  {
+    "hotelId": 0,
+    "roomNumber": 0,
+    "rate": 0,
+    "petFriendly": true,
+    "roomId": 0,
+    "room": {
+      "id": 0,
+      "name": "string",
+      "layout": 0,
+      "amenities": [
         {
-            "hotelID": 1,
-            "roomNumber": 237,
-            "rate": 66.60,
-            "petFriendly": false,
-            "roomID": 2,
-            "room": {
-                "id": 2,
-                "name": "Queen Suite",
-                "layout": "TwoBedroom",
-                "amenities": [
-                    {
-                        "id": 1,
-                        "name": "Bleeding walls"
-                    },
-                    {
-                        "id": 2,
-                        "name": "Creepy twins"
-                    }
-                ]
-            }
+          "id": 0,
+          "amenityName": "string"
         }
+      ]
+    }
+  }
+```
++ `api/rooms`
+```
+{
+  "id": 0,
+  "name": "string",
+  "layout": 0,
+  "amenities": [
+    {
+      "id": 0,
+      "amenityName": "string"
+    }
+  ]
+}
+```
++ /api/amenities
+```
+{
+  "id": 0,
+  "amenityName": "string"
+}
 ```
 
+<hr>
+
+## Identity
+Identity is used to verify users and then control their access to content based on authority level.  The process starts when user requests data or content that requires authorization.
+
+The request goes through the server where the middle where calls the de fault handler's auth method.  This returns an object with any available context for the user.
+
+Then we hit the controller.  If the route doesn't have an `[Authorize]` annotation the thing loads and we are done because there are no permissions set.
+
+If the route does require auth then it checks if the user has the proper permissions.  If the user is not they are redirected for login.  Once logged in the user is redirected back, if they have authority the page load.  If not we redirect to forbidden message page.
+
+
+
+![Identity visual](https://digitalmccullough.com/images/aspnetcore-auth-system-demystified/aspnetcore-auth-system-demystified_auth-flow.svg)
 
 
 ## Change Log
@@ -94,7 +149,17 @@ An API for an international hotel chain.  The API should be able to return infor
     + Updated services to `Include` all linked data when a query is made against any object.
     + Updated summary comments in service files. 
   + **version 1.0.4** *02/01/2021 -
-    + Attempted to add some DTOs.  Everything is broken and nothing works now.   
+    + Attempted to add some DTOs.  Everything is broken and nothing works now.  
+  + **version 1.0.5** *02/03/2021* -
+    + All of the DTOs are now properly implemented.
+    + Added dependencies for swagger and implemented the service, the main index route now returns a swagger dos CRUD page.
+    + Added unit testing to the project.  Add hotel, room, and amenity tests passing.  Delete method works properly, however tests is not passing, still need to work that out.
+    + Added Authentication with Identity in the Microsoft Framework.
+    + Can add and user to the database and login them in via post and get(post technically) CRUD actions. 
+
+<hr>
+
 ## Attributions
 
 + [Code Fellows Entity Framework Setup](https://codefellows.github.io/seattle-dotnet-401d12/class-12/resources/ef-web-app)<br>
++ Alan Hung, Bade Habib and David Dicken were all around to bounce ideas and help me work through some blockers.

@@ -8,6 +8,7 @@ namespace AsyncHotel.Models
 {
     public class Amenities
     {
+        [Required]
         public int Id { get; set; }
         [Required]
         public string AmenityName { get; set; }
