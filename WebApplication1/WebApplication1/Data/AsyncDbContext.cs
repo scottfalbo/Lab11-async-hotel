@@ -1,5 +1,6 @@
 ﻿using AsyncHotel.Models;
 using AsyncHotel.Models.Api;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -31,6 +32,11 @@ namespace AsyncHotel.Data
 
             modelBuilder.Entity<RoomAmenities>().HasKey(
                 x => new { x.RoomId, x.AmenitiesId });
+
+            //TODO: todays stuff, create roles
+            SeedRole(modelBuilder, "District Manager", "create", "update", "delete");
+            SeedRole(modelBuilder, "Property Manager", "create", "update", "delete");
+            SeedRole(modelBuilder, "Agent", "create", "update", "delete");
 
             modelBuilder.Entity<Hotel>().HasData(
               new Hotel 
@@ -138,7 +144,31 @@ namespace AsyncHotel.Data
                     RoomNumber = 3,
                     RoomId = 3
                 });
+        }
 
+
+        private int id = 1;
+        private void SeedRole (ModelBuilder modelBuilder, string roleName, params string[] permissions)
+        {
+            var role = new IdentityRole
+            {
+                Id = roleName.ToLower(),
+                Name = roleName,
+                NormalizedName = roleName.ToUpper(),
+                ConcurrencyStamp = Guid.Empty.ToString()
+            };
+            modelBuilder.Entity<IdentityRole>().HasData(role);
+
+            var roleClaims = permissions.Select(permission =>
+               new IdentityRoleClaim<string>
+               {
+                    Id = id++,
+                    RoleId = role.Id,
+                    ClaimType = "permissions",
+                    ClaimValue = permission
+               });
+            modelBuilder.Entity<IdentityRoleClaim<string>>().HasData(roleClaims);
+            //claim type comes from startup seed method call, line 90ish
         }
 
     }

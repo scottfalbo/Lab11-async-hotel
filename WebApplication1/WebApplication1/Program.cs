@@ -25,13 +25,9 @@ namespace WebApplication1
 
         private static void UpdateDatabase(IServiceProvider services)
         {
-            using (var serviceScope = services.CreateScope())
-            {
-                using (var db = serviceScope.ServiceProvider.GetService<AsyncDbContext>())
-                {
-                    db.Database.Migrate();
-                }
-            }
+            using var serviceScope = services.CreateScope();
+            using var db = serviceScope.ServiceProvider.GetService<AsyncDbContext>();
+            db.Database.Migrate();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>

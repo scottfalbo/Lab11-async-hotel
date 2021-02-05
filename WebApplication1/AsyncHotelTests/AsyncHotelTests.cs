@@ -70,11 +70,12 @@ namespace AsyncHotelTests
             Assert.Null(result);
         }
 
-
+        /*
         [Fact]
         public async Task Can_Register_A_New_User_And_Add_Them_To_The_DB()
         {
             
         }
+        */
     }
 }
