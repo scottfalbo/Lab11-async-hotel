@@ -9,9 +9,11 @@ using AsyncHotel.Data;
 using AsyncHotel.Models;
 using AsyncHotel.Models.Interfaces;
 using AsyncHotel.Models.Api;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AsyncHotel.Controller
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class AmenitiesController : ControllerBase
@@ -24,6 +26,7 @@ namespace AsyncHotel.Controller
         }
 
         // GET: api/Amenities
+        [AllowAnonymous]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<AmenitiesDto>>> GetAmenities()
         {
@@ -31,6 +34,7 @@ namespace AsyncHotel.Controller
         }
 
         // GET: api/Amenities/5
+        [AllowAnonymous]
         [HttpGet("{id}")]
         public async Task<ActionResult<AmenitiesDto>> GetAmenity(int id)
         {
@@ -47,6 +51,7 @@ namespace AsyncHotel.Controller
         // PUT: api/Amenities/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        [Authorize(Roles = "District Manager")]
         [HttpPut("{id}")]
         public async Task<IActionResult> PutAmenities(int id, AmenitiesDto amenities)
         {
@@ -63,6 +68,7 @@ namespace AsyncHotel.Controller
         // POST: api/Amenities
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        [Authorize(Roles = "District Manager")]
         [HttpPost]
         public async Task<ActionResult<Amenities>> PostAmenities(Amenities amenities)
         {
@@ -71,6 +77,7 @@ namespace AsyncHotel.Controller
         }
 
         // DELETE: api/Amenities/5
+        [Authorize(Roles = "District Manager")]
         [HttpDelete("{id}")]
         public async Task<ActionResult<Amenities>> DeleteAmenities(int id)
         {

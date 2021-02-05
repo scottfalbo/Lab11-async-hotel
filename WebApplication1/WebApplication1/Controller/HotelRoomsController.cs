@@ -9,9 +9,11 @@ using AsyncHotel.Data;
 using AsyncHotel.Models;
 using AsyncHotel.Models.Interfaces;
 using AsyncHotel.Models.Api;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AsyncHotel.Controller
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class HotelRoomsController : ControllerBase
@@ -26,6 +28,8 @@ namespace AsyncHotel.Controller
         // POST: api/HotelRooms/
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        [Authorize(Roles = "District Manager")]
+        [Authorize(Roles = "Property Manager")]
         [HttpPost]
         public async Task<ActionResult<HotelRoom>> PostHotelRoom(HotelRoom hotelRoom, int hotelId)
         {
@@ -35,6 +39,7 @@ namespace AsyncHotel.Controller
         }
 
         // GET: api/HotelRooms/n
+        [AllowAnonymous]
         [HttpGet]
         [Route("{hotelId}")]
         //[Route]
@@ -44,6 +49,7 @@ namespace AsyncHotel.Controller
         }
 
         // GET: api/HotelRooms/n/n
+        [AllowAnonymous]
         [HttpGet]
         [Route("{hotelId}/{roomId}")]
         public async Task<ActionResult<HotelRoomDto>> GetHotelRoom(int hotelId, int roomId)
@@ -67,6 +73,7 @@ namespace AsyncHotel.Controller
         }
 
         // DELETE: api/HotelRooms/n/n
+        [Authorize(Roles = "District Manager")]
         [HttpDelete]
         [Route("{hotelId}/{roomId}")]
         public async Task<ActionResult<HotelRoomDto>> DeleteHotelRoom(int hotelId, int roomNumber)

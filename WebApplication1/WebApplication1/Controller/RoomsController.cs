@@ -9,9 +9,11 @@ using AsyncHotel.Data;
 using AsyncHotel.Models;
 using AsyncHotel.Models.Interfaces;
 using AsyncHotel.Models.Api;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AsyncHotel.Controller
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class RoomsController : ControllerBase
@@ -24,6 +26,7 @@ namespace AsyncHotel.Controller
         }
 
         // GET: api/Rooms
+        [AllowAnonymous]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<RoomDto>>> GetRooms()
         {
@@ -31,6 +34,7 @@ namespace AsyncHotel.Controller
         }
 
         // GET: api/Rooms/5
+        [AllowAnonymous]
         [HttpGet("{id}")]
         public async Task<ActionResult<RoomDto>> GetRoom(int id)
         {
@@ -47,6 +51,7 @@ namespace AsyncHotel.Controller
         // PUT: api/Rooms/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        [Authorize(Roles = "District Manager")]
         [HttpPut("{id}")]
         public async Task<IActionResult> PutRoom(int id, RoomDto room)
         {
@@ -62,6 +67,7 @@ namespace AsyncHotel.Controller
         // POST: api/Rooms
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        [Authorize(Roles = "District Manager")]
         [HttpPost]
         public async Task<ActionResult<Room>> PostRoom(Room room)
         {
@@ -70,6 +76,8 @@ namespace AsyncHotel.Controller
         }
 
         // POST: api/rooms/{roomId}/Amenities/{amenitiesId}
+        [Authorize(Roles = "District Manager")]
+        [Authorize(Roles = "Property Manager")]
         [HttpPost]
         [Route("{roomId}/{amenitiesId}")]
         public async Task<ActionResult> AddAmenityToRoom(int roomId, int AmenitiesId)
@@ -79,6 +87,7 @@ namespace AsyncHotel.Controller
         }
 
         // DELETE: api/Rooms/5
+        [Authorize(Roles = "District Manager")]
         [HttpDelete("{id}")]
         public async Task<ActionResult<Room>> DeleteRoom(int id)
         {

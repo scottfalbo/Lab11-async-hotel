@@ -4,17 +4,20 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace AsyncHotel.Models.Interfaces.Services
 {
     public class IdentityUserService : IUserService
     {
-        private UserManager<AppUser> userManager;
+        private readonly UserManager<AppUser> userManager;
+        private readonly JwtTokenService tokenService;
 
-        public IdentityUserService(UserManager<AppUser> manager)
+        public IdentityUserService(UserManager<AppUser> manager, JwtTokenService jwtTokenService)
         {
             userManager = manager;
+            tokenService = jwtTokenService;
         }
 
         public async Task<UserDto> Register(RegisterUser data, ModelStateDictionary modelState)
@@ -29,6 +32,9 @@ namespace AsyncHotel.Models.Interfaces.Services
 
             if (result.Succeeded)
             {
+                //beacuse they are a user, add their role
+            await userManager.AddToRolesAsync(user, data.Roles);
+
                 return new UserDto 
                 { 
                     Id = user.Id,
@@ -61,11 +67,23 @@ namespace AsyncHotel.Models.Interfaces.Services
                 return new UserDto
                 {
                     Id = user.Id,
-                    UserName = user.UserName
+                    UserName = user.UserName,
+                    Token = await tokenService.GetToken(user, System.TimeSpan.FromHours(3))
                 };
             }
 
             return null;
+        }
+
+        public async Task<UserDto> GetUser(ClaimsPrincipal principal)
+        {
+            var user = await userManager.GetUserAsync(principal);
+                return new UserDto
+                {
+                    Id = user.Id,
+                    UserName = user.UserName,
+                    Token = await tokenService.GetToken(user, System.TimeSpan.FromMinutes(5))
+                };
         }
     }
 }
